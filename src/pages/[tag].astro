@@ -1,0 +1,92 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import { ViewTransitions } from 'astro:transitions';
+
+export async function getStaticPaths() {
+    const allPosts = await getCollection('blog');
+    const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags || []).flat())];
+
+    return uniqueTags.map((tag) => {
+        const filteredPosts = allPosts.filter((post) => post.data.tags?.includes(tag));
+        return {
+            params: { tag },
+            props: { posts: filteredPosts },
+        };
+    });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <BaseHead title={`Etiqueta: ${tag} - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+        <ViewTransitions />
+        <style>
+            main { /* hereda global */ }
+            h1 { margin-bottom: 2rem; text-align: center; }
+            span.tag-highlight {
+                color: var(--accent);
+                text-transform: capitalize;
+                display: inline-block;
+                animation: tag-highlight-bob 2.8s ease-in-out infinite;
+            }
+            ul {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 2rem;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            li { /* estilos idénticos a la página de blog principal */ }
+            .hero-image { width: 100%; height: 200px; object-fit: cover; }
+            /* ... más estilos según necesidad ... */
+        </style>
+    </head>
+    <body>
+        <Header />
+        <main>
+            <h1>Artículos etiquetados con <span class="tag-highlight">#{tag}</span></h1>
+            <section>
+                <ul>
+                    {
+                        posts.map((post) => {
+                            const heroImageSrc =
+                                typeof post.data.heroImage === 'string'
+                                    ? post.data.heroImage
+                                    : post.data.heroImage && typeof post.data.heroImage === 'object' && 'src' in post.data.heroImage
+                                        ? (post.data.heroImage as any).src
+                                        : undefined;
+
+                            return (
+                                <li>
+                                    <a href={`/blog/${post.slug}/`}>
+                                        {heroImageSrc && (
+                                            <img width={720} height={360} src={heroImageSrc} alt={post.data.title} class="hero-image" />
+                                        )}
+                                        <div class="content">
+                                            <h4 class="title">{post.data.title}</h4>
+                                            <p class="date">
+                                                <FormattedDate date={post.data.pubDate} />
+                                            </p>
+                                            <p class="description">{post.data.description}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </section>
+        </main>
+        <Footer />
+    </body>
+</html>

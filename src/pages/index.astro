@@ -1,0 +1,239 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			/* HERO SECTION STYLES */
+			.hero {
+				position: relative;
+				height: 90vh;
+				min-height: 500px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				padding: 2rem 1rem;
+				overflow: hidden; /* Evita que los blobs se salgan */
+				background-color: var(--surface); /* Fondo base para modo claro */
+			}
+
+			:global(html.dark) .hero {
+				background-color: #05050a; /* Fondo base para modo oscuro */
+			}
+
+			.hero-background {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 0;
+			}
+
+			.blob {
+				position: absolute;
+				border-radius: 50%;
+				filter: blur(80px);
+				opacity: 0.4;
+			}
+
+			:global(html.dark) .blob {
+				opacity: 0.25;
+			}
+
+			.blob1 {
+				width: 350px;
+				height: 350px;
+				background-color: #007cf0; /* Azul profesional */
+				animation: blob-move-1 15s infinite alternate;
+			}
+
+			.blob2 {
+				width: 300px;
+				height: 300px;
+				background-color: #4fe2c2; /* Verde-azulado cálido */
+				animation: blob-move-2 18s infinite alternate;
+			}
+
+			@keyframes blob-move-1 {
+				from { transform: translate(10%, 20%) scale(1); }
+				to { transform: translate(50%, -10%) scale(1.2); }
+			}
+
+			@keyframes blob-move-2 {
+				from { transform: translate(80%, 60%) scale(1); }
+				to { transform: translate(20%, 70%) scale(0.9); }
+			}
+
+			.hero-content {
+				position: relative;
+				z-index: 1;
+				max-width: 800px;
+			}
+
+			.hero-title {
+				font-size: clamp(2.5rem, 6vw, 4.5rem);
+				font-weight: 700;
+				margin-bottom: 1rem;
+				color: rgb(var(--black));
+			}
+
+			.hero-text {
+				font-size: clamp(1rem, 2.5vw, 1.2rem);
+				line-height: 1.7;
+				margin: 0 auto 2rem auto;
+				max-width: 650px;
+				color: rgb(var(--gray-dark));
+			}
+
+			.typing-container {
+				margin-top: 1.5rem;
+				font-size: clamp(1.2rem, 3vw, 1.5rem);
+				font-weight: 700;
+				color: var(--accent);
+				min-height: 5rem; /* Reserve space for text */
+			}
+
+			:global(html.dark) .hero-title { color: #f3f4f6; }
+			:global(html.dark) .hero-text { color: #d1d5db; }
+			:global(html.dark) .typing-container { color: #4fe2c2; }
+
+
+			/* Typing Effect */
+			.typing-cursor::after {
+				content: '|';
+				animation: blink 0.7s infinite;
+			}
+
+			@keyframes blink {
+				50% { opacity: 0; }
+			}
+
+			/* CTA Button */
+			.cta-button {
+				display: inline-block;
+				padding: 0.8rem 2rem;
+				background-color: var(--accent);
+				color: white;
+				text-decoration: none;
+				font-size: 1.1rem;
+				font-weight: 700;
+				border-radius: 50px;
+				transition: transform 0.3s ease, background-color 0.3s ease;
+				box-shadow: 0 4px 15px rgba(35, 55, 255, 0.4);
+			}
+
+			.cta-button:hover {
+				transform: scale(1.05);
+				background-color: var(--accent-dark);
+			}
+
+			/* Reveal Animation */
+			.reveal {
+				opacity: 0;
+				transform: translateY(30px);
+				transition: opacity 0.8s ease, transform 0.8s ease;
+			}
+
+			.reveal.visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			/* Delay for staggered animation */
+			.reveal:nth-child(2) { transition-delay: 0.2s; }
+			.reveal:nth-child(3) { transition-delay: 0.4s; }
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				.hero { height: auto; min-height: 80vh; padding: 6rem 1rem 4rem; }
+				.blob1, .blob2 { width: 250px; height: 250px; filter: blur(60px); }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<div class="hero-background">
+					<div class="blob blob1"></div>
+					<div class="blob blob2"></div>
+				</div>
+				<div class="hero-content">
+					<h1 class="hero-title reveal">Somos EntrePares</h1>
+					<p class="hero-text reveal">
+						Soy Jorge Polanco, Facilitador Regional del Programa Entre Pares Panamá del MEDUCA en la provincia de Chiriquí. Con pasión y compromiso, capacito a los docentes chiricanos en el uso innovador de las tecnologías educativas para transformar el aprendizaje de nuestros estudiantes y llevar la educación de nuestra región al siguiente nivel. 
+					</p>
+					<p class="typing-container reveal">
+						<span id="welcome-text"></span>
+					</p>
+					<div class="reveal">
+						<a href="/blog" class="cta-button">Explorar Recursos</a>
+					</div>
+				</div>
+			</section>
+			
+		</main>
+		<Footer />
+		<script>
+			// --- REVEAL ON SCROLL ---
+			document.addEventListener('DOMContentLoaded', () => {
+				const revealElements = document.querySelectorAll('.reveal');
+
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('visible');
+						}
+					});
+				}, {
+					threshold: 0.1
+				});
+
+				revealElements.forEach(el => {
+					observer.observe(el);
+				});
+
+				// --- TYPING EFFECT ---
+				const welcomeText = "¡Bienvenidos! Aquí encontrarás recursos, capacitaciones y una comunidad de educadores listos para crecer juntos.";
+				const welcomeElement = document.getElementById('welcome-text');
+				
+				if (welcomeElement) {
+					let i = 0;
+					function typeWriter() {
+						if (i < welcomeText.length) {
+							welcomeElement.innerHTML += welcomeText.charAt(i);
+							if (i === 0) {
+								welcomeElement.classList.add('typing-cursor');
+							}
+							i++;
+							setTimeout(typeWriter, 50);
+						} else {
+							welcomeElement.classList.remove('typing-cursor');
+						}
+					}
+					
+					// Start typing when the element is visible
+					const typingObserver = new IntersectionObserver((entries, obs) => {
+						entries.forEach(entry => {
+							if (entry.isIntersecting) {
+								setTimeout(typeWriter, 800); // Start after reveal animation
+								obs.unobserve(entry.target); // No need to observe anymore
+							}
+						});
+					}, { threshold: 0.5 });
+					
+					typingObserver.observe(welcomeElement);
+				}
+			});
+		</script>
+	</body>
+</html>

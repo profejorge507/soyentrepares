@@ -1,0 +1,629 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { ViewTransitions } from 'astro:transitions';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Modal from '../components/Modal.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+interface GalleryItem {
+  id: string;
+  image: string;
+  icon: string;
+  title: string;
+  alt: string;
+  category: string;
+  paragraphs: string[];
+  details: { label: string; value: string }[];
+}
+
+const galleryItems: GalleryItem[] = [
+  {
+    id: 'modal-web',
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80',
+    icon: 'code-slash',
+    title: 'Desarrollo Web',
+    alt: 'Pantalla con código de programación web en un editor moderno',
+    category: 'Tecnología',
+    paragraphs: [
+      'Me especializo en crear aplicaciones web modernas y responsivas utilizando las tecnologías más actuales. He trabajado con Astro, React, Node.js y otras herramientas para desarrollar soluciones web escalables y de alto rendimiento.',
+      'Mis proyectos incluyen desde sitios corporativos hasta aplicaciones web complejas con funcionalidades avanzadas como APIs REST, autenticación de usuarios y bases de datos.'
+    ],
+    details: [
+      { label: 'Proyectos', value: '8+' },
+      { label: 'Experiencia', value: '6 años' },
+      { label: 'Tecnologías', value: '5+' }
+    ]
+  },
+  {
+    id: 'modal-design',
+    image: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80',
+    icon: 'palette',
+    title: 'Diseño de Interfaz',
+    alt: 'Diseñador trabajando en wireframes y prototipos de interfaz de usuario',
+    category: 'Diseño',
+    paragraphs: [
+      'Creo interfaces de usuario atractivas, intuitivas y centradas en la experiencia del usuario. Cada diseño es cuidadosamente planificado para proporcionar la mejor experiencia posible a los usuarios.',
+      'Trabajo con principios de diseño moderno, accesibilidad y usabilidad para asegurar que cada proyecto sea no solo hermoso, sino también funcional y accesible para todos.'
+    ],
+    details: [
+      { label: 'Diseños', value: '12+' },
+      { label: 'Clientes', value: '15+' },
+      { label: 'Herramientas', value: '6+' }
+    ]
+  },
+  {
+    id: 'modal-data',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    icon: 'graph-up',
+    title: 'Análisis de Datos',
+    alt: 'Gráficos y dashboards de análisis de datos en una pantalla',
+    category: 'Datos',
+    paragraphs: [
+      'Tengo experiencia en la recopilación, análisis e interpretación de grandes volúmenes de datos para extraer información valiosa que facilita la toma de decisiones estratégicas.',
+      'Utilizo herramientas avanzadas de análisis y visualización de datos para convertir datos complejos en información clara y accionable que impulsa el crecimiento empresarial.'
+    ],
+    details: [
+      { label: 'Proyectos', value: '10+' },
+      { label: 'Registros', value: '1M+' },
+      { label: 'Precisión', value: '98%' }
+    ]
+  },
+  {
+    id: 'modal-innovation',
+    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80',
+    icon: 'lightning',
+    title: 'Proyectos Innovadores',
+    alt: 'Interfaz de inteligencia artificial con visualizaciones generativas',
+    category: 'Innovación',
+    paragraphs: [
+      'Busco constantemente nuevas formas de resolver problemas y crear soluciones innovadoras que marquen la diferencia. Mis proyectos combinan creatividad, tecnología y estrategia para lograr resultados excepcionales.',
+      'Desde automatización de procesos hasta implementación de inteligencia artificial, trabajo en proyectos que no solo resuelven problemas actuales, sino que anticipan necesidades futuras.'
+    ],
+    details: [
+      { label: 'Innovaciones', value: '7+' },
+      { label: 'Impacto', value: 'Alto' },
+      { label: 'ROI', value: '250%+' }
+    ]
+  },
+  {
+    id: 'modal-team',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80',
+    icon: 'people',
+    title: 'Gestión de Equipos',
+    alt: 'Equipo colaborando en una sesión de trabajo frente a pantallas',
+    category: 'Liderazgo',
+    paragraphs: [
+      'Liderazgo y coordinación de equipos multidisciplinarios en proyectos de envergadura. Me enfoco en la comunicación clara y el empoderamiento de cada miembro del equipo.',
+      'Fomento un ambiente colaborativo donde se valora la diversidad de ideas y se promueve el aprendizaje continuo.'
+    ],
+    details: [
+      { label: 'Equipos', value: '5+' },
+      { label: 'Proyectos', value: '20+' },
+      { label: 'Satisfacción', value: '98%' }
+    ]
+  },
+  {
+    id: 'modal-education',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80',
+    icon: 'mortarboard',
+    title: 'Educación y Capacitación',
+    alt: 'Sesión de capacitación con personas aprendiendo en un aula moderna',
+    category: 'Educación',
+    paragraphs: [
+      'Contribución al aprendizaje continuo y desarrollo profesional de otros a través de talleres, cursos y mentorías. Comparto conocimiento práctico y efectivo.',
+      'Mi objetivo es inspirar a otros a seguir creciendo y adoptando nuevas tecnologías para mejorar la educación.'
+    ],
+    details: [
+      { label: 'Capacitaciones', value: '30+' },
+      { label: 'Participantes', value: '3k+' },
+      { label: 'Retención', value: '85%' }
+    ]
+  }
+];
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={`Galería - ${SITE_TITLE}`} description="Galería de proyectos y trabajos profesionales" />
+		<ViewTransitions />
+		<style>
+			/* ── Encabezado de página ── */
+			.gallery-header {
+				text-align: center;
+				margin-bottom: 2.5rem;
+			}
+
+			.gallery-header h1 {
+				font-size: clamp(2rem, 4vw, 3rem);
+				margin-bottom: 0.5rem;
+				color: rgb(var(--black));
+			}
+
+			.gallery-intro {
+				max-width: 680px;
+				margin: 0 auto 2rem;
+				color: rgb(var(--gray-dark));
+				font-size: 1rem;
+				line-height: 1.7;
+				text-align: center;
+			}
+
+			/* ── Estadísticas ── */
+			.gallery-stats {
+				display: flex;
+				justify-content: center;
+				gap: 2rem;
+				flex-wrap: wrap;
+				background: rgba(255,255,255,0.7);
+				backdrop-filter: blur(6px);
+				border-radius: 12px;
+				padding: 1.5rem 2rem;
+				margin-bottom: 2.5rem;
+				border: 1px solid rgba(var(--gray-light), 0.8);
+				box-shadow: 0 2px 8px rgba(var(--gray), 0.08);
+			}
+
+			:global(html.dark) .gallery-stats {
+				background: rgba(31, 41, 55, 0.6);
+				border-color: rgba(255,255,255,0.08);
+			}
+
+			.stat-item {
+				text-align: center;
+			}
+
+			.stat-number {
+				font-size: 1.75rem;
+				font-weight: 700;
+				color: var(--accent);
+				line-height: 1;
+			}
+
+			.stat-label {
+				font-size: 0.82rem;
+				color: rgb(var(--gray));
+				margin-top: 0.25rem;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+
+			/* ── Grid de galería ── */
+			.gallery {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				gap: 1.75rem;
+				padding: 0.5rem 0 2rem;
+			}
+
+			/* ── Tarjeta ── */
+			.gallery-item {
+				background: white;
+				border-radius: 14px;
+				overflow: hidden;
+				border: 1px solid rgba(var(--gray-light), 0.6);
+				box-shadow: 0 2px 8px rgba(var(--gray), 0.08);
+				transition:
+					transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+					box-shadow 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+				cursor: pointer;
+				position: relative;
+				/* reset button styles */
+				padding: 0;
+				text-align: left;
+				width: 100%;
+				font-family: inherit;
+				-webkit-appearance: none;
+				appearance: none;
+			}
+
+			:global(html.dark) .gallery-item {
+				background: #1f2937;
+				border-color: rgba(255,255,255,0.08);
+				box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+			}
+
+			.gallery-item:hover {
+				transform: translateY(-6px);
+				box-shadow: 0 16px 32px rgba(var(--gray), 0.18);
+			}
+
+			:global(html.dark) .gallery-item:hover {
+				box-shadow: 0 16px 32px rgba(0,0,0,0.35);
+			}
+
+			.gallery-item:focus-visible {
+				outline: 2px solid var(--accent);
+				outline-offset: 3px;
+			}
+
+			/* ── Contenedor de imagen ── */
+			.gallery-image-container {
+				position: relative;
+				width: 100%;
+				height: 220px;
+				overflow: hidden;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			}
+
+			.gallery-image {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+				transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+				animation: fadeInImg 0.6s ease both;
+			}
+
+			@keyframes fadeInImg {
+				from {
+					opacity: 0;
+					transform: scale(1.04);
+				}
+				to {
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
+
+			.gallery-item:hover .gallery-image {
+				transform: scale(1.07);
+			}
+
+			/* ── Chip de categoría ── */
+			.gallery-category {
+				position: absolute;
+				top: 0.75rem;
+				left: 0.75rem;
+				background: rgba(255,255,255,0.92);
+				color: #1a1a1a;
+				font-size: 0.7rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.6px;
+				padding: 0.25rem 0.6rem;
+				border-radius: 20px;
+				z-index: 3;
+				box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+				backdrop-filter: blur(4px);
+			}
+
+			/* ── Overlay al hacer hover ── */
+			.gallery-overlay {
+				position: absolute;
+				inset: 0;
+				background: rgba(0, 0, 0, 0);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				transition: background 0.32s ease;
+				z-index: 2;
+			}
+
+			.gallery-item:hover .gallery-overlay {
+				background: rgba(0, 0, 0, 0.55);
+			}
+
+			/* Ícono de zoom central */
+			.overlay-icon {
+				color: white;
+				font-size: 2.2rem;
+				opacity: 0;
+				transform: scale(0.7);
+				transition:
+					opacity 0.28s ease,
+					transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+				text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+			}
+
+			.gallery-item:hover .overlay-icon {
+				opacity: 1;
+				transform: scale(1);
+			}
+
+			/* Panel de texto inferior en hover */
+			.overlay-text {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 1rem 1.1rem 0.9rem;
+				background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 100%);
+				color: white;
+				opacity: 0;
+				transform: translateY(8px);
+				transition:
+					opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+					transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			.gallery-item:hover .overlay-text {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			.overlay-text h3 {
+				font-size: 0.95rem;
+				font-weight: 700;
+				margin: 0 0 0.2rem;
+				color: #fff;
+				text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+				line-height: 1.3;
+			}
+
+			.overlay-text p {
+				font-size: 0.75rem;
+				margin: 0;
+				color: rgba(255,255,255,0.88);
+				line-height: 1.4;
+				/* truncar a 2 líneas */
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+			}
+
+			/* ── Info debajo de la imagen ── */
+			.gallery-info {
+				padding: 1.1rem 1.25rem 1.25rem;
+			}
+
+			.gallery-title {
+				font-size: 1rem;
+				font-weight: 700;
+				margin: 0 0 0.35rem;
+				color: rgb(var(--black));
+				display: flex;
+				align-items: center;
+				gap: 0.45rem;
+				line-height: 1.3;
+			}
+
+			:global(html.dark) .gallery-title {
+				color: #f3f4f6;
+			}
+
+			.gallery-title i {
+				color: var(--accent);
+				font-size: 1rem;
+				flex-shrink: 0;
+			}
+
+			.gallery-description {
+				color: rgb(var(--gray));
+				margin: 0;
+				font-size: 0.83rem;
+				line-height: 1.5;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+
+			:global(html.dark) .gallery-description {
+				color: #9ca3af;
+			}
+
+			/* ── Responsive ── */
+			@media (max-width: 720px) {
+				.gallery {
+					grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+					gap: 1.25rem;
+				}
+
+				.gallery-image-container {
+					height: 190px;
+				}
+
+				.gallery-stats {
+					gap: 1.25rem;
+					padding: 1.1rem 1.5rem;
+				}
+
+				.stat-number {
+					font-size: 1.5rem;
+				}
+			}
+
+			@media (max-width: 480px) {
+				.gallery {
+					grid-template-columns: 1fr;
+					gap: 1rem;
+				}
+
+				.gallery-image-container {
+					height: 200px;
+				}
+
+				.gallery-stats {
+					gap: 1rem;
+					padding: 1rem;
+				}
+
+				.stat-number {
+					font-size: 1.35rem;
+				}
+			}
+
+			/* ── Flechas de navegación dentro del modal ── */
+			.modal-nav {
+				display: flex;
+				justify-content: space-between;
+				position: absolute;
+				top: 50%;
+				left: 0;
+				right: 0;
+				transform: translateY(-50%);
+				pointer-events: none;
+				padding: 0 0.5rem;
+				z-index: 10;
+			}
+
+			.modal-nav button {
+				background: rgba(0, 0, 0, 0.45);
+				border: none;
+				color: white;
+				font-size: 1.6rem;
+				width: 2.75rem;
+				height: 2.75rem;
+				border-radius: 50%;
+				pointer-events: all;
+				cursor: pointer;
+				transition: background 0.25s ease, transform 0.2s ease;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				line-height: 1;
+			}
+
+			.modal-nav button:hover {
+				background: rgba(0, 0, 0, 0.7);
+				transform: scale(1.08);
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<!-- Encabezado -->
+			<div class="gallery-header">
+				<h1>🎨 Galería de Proyectos</h1>
+				<p class="gallery-intro">
+					Momentos que inspiran, conectan y transforman. 
+					Esta galería muestra el poder del aprendizaje entre colegas, donde compartir experiencias se convierte en crecimiento colectivo.
+				</p>
+			</div>
+
+		
+			<!-- Grilla de tarjetas -->
+			<div class="gallery">
+				{galleryItems.map(item => (
+					<>
+						<button
+							class="gallery-item"
+							data-modal={item.id}
+							aria-label={`Ver detalles de ${item.title}`}
+						>
+							<div class="gallery-image-container">
+								<img
+									src={item.image}
+									alt={item.alt}
+									class="gallery-image"
+									loading="lazy"
+									decoding="async"
+									width="800"
+									height="534"
+								/>
+								<span class="gallery-category">{item.category}</span>
+								<div class="gallery-overlay" aria-hidden="true">
+									<i class="bi bi-zoom-in overlay-icon"></i>
+									<div class="overlay-text">
+										<h3>{item.title}</h3>
+										<p>{item.paragraphs[0]}</p>
+									</div>
+								</div>
+							</div>
+							<div class="gallery-info">
+								<h3 class="gallery-title">
+									<i class={`bi bi-${item.icon}`}></i>
+									{item.title}
+								</h3>
+								<p class="gallery-description">{item.paragraphs[0]}</p>
+							</div>
+						</button>
+
+						<Modal
+							id={item.id}
+							title={item.title}
+							image={item.image}
+							icon={item.icon}
+							details={item.details}
+						>
+							{item.paragraphs.map(p => (
+								<p class="modal-description">{p}</p>
+							))}
+						</Modal>
+					</>
+				))}
+			</div>
+		</main>
+		<Footer />
+
+		<script is:inline>
+			const galleryIds = JSON.parse(document.currentScript.dataset.ids || '[]');
+
+			document.addEventListener('astro:page-load', initGalleryNav);
+			// también ejecutar en carga directa (sin transición)
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initGalleryNav);
+			} else {
+				initGalleryNav();
+			}
+
+			function initGalleryNav() {
+				let currentIndex = -1;
+
+				// Insertar flechas de navegación en cada modal (solo una vez)
+				document.querySelectorAll('.modal-overlay').forEach((m, idx) => {
+					if (m.querySelector('.modal-nav')) return; // ya insertado
+					const nav = document.createElement('div');
+					nav.className = 'modal-nav';
+					nav.setAttribute('aria-hidden', 'true');
+					nav.innerHTML = `
+						<button class="modal-prev" aria-label="Proyecto anterior">&#8249;</button>
+						<button class="modal-next" aria-label="Proyecto siguiente">&#8250;</button>
+					`;
+					const header = m.querySelector('.modal-header');
+					if (header) header.appendChild(nav);
+				});
+
+				// Rastrear cuál modal está abierto
+				document.addEventListener('click', (e) => {
+					const trigger = e.target.closest('[data-modal]');
+					if (trigger) {
+						const id = trigger.getAttribute('data-modal');
+						const ids = getGalleryIds();
+						currentIndex = ids.indexOf(id);
+					}
+
+					if (e.target.closest('.modal-prev')) {
+						navigateModal(-1);
+					}
+					if (e.target.closest('.modal-next')) {
+						navigateModal(1);
+					}
+				});
+
+				// Teclado: flechas para navegar, ESC para cerrar
+				document.addEventListener('keydown', (e) => {
+					const activeModal = document.querySelector('.modal-overlay.active');
+					if (!activeModal) return;
+					if (e.key === 'ArrowRight') navigateModal(1);
+					if (e.key === 'ArrowLeft') navigateModal(-1);
+				});
+
+				function navigateModal(direction) {
+					const ids = getGalleryIds();
+					if (ids.length === 0 || currentIndex < 0) return;
+					currentIndex = (currentIndex + direction + ids.length) % ids.length;
+					if (window.__modalHelpers) {
+						// Cerrar todos los abiertos primero
+						document.querySelectorAll('.modal-overlay.active').forEach(m => {
+							window.__modalHelpers.closeModal(m.id);
+						});
+						window.__modalHelpers.openModal(ids[currentIndex]);
+					}
+				}
+
+				function getGalleryIds() {
+					return Array.from(document.querySelectorAll('[data-modal]'))
+						.map(el => el.getAttribute('data-modal'))
+						.filter(Boolean);
+				}
+			}
+		</script>
+	</body>
+</html>

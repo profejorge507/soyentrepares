@@ -1,0 +1,238 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={`Política de Privacidad - ${SITE_TITLE}`} description="Política de Privacidad de WebAstro" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="legal-container">
+				<h1>Política de Privacidad</h1>
+				<p class="last-updated">Última actualización: Febrero 2026</p>
+
+				<section>
+					<h2>1. Introducción</h2>
+					<p>
+						WebAstro respeta tu privacidad y se compromete a proteger tus datos personales. Esta Política de Privacidad
+						explica cómo recopilamos, utilizamos y protegemos tu información cuando visitas nuestro sitio web.
+					</p>
+				</section>
+
+				<section>
+					<h2>2. Información que Recopilamos</h2>
+					<p>Podemos recopilar información de las siguientes maneras:</p>
+					<ul>
+						<li><strong>Información de Contacto:</strong> Si nos contactas a través de formularios o correo electrónico.</li>
+						<li><strong>Datos de Navegación:</strong> Tu dirección IP, tipo de navegador, páginas visitadas y tiempo de permanencia.</li>
+						<li><strong>Cookies:</strong> Utilizamos cookies para mejorar tu experiencia de navegación.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>3. Cómo Utilizamos tu Información</h2>
+					<p>Utilizamos la información recopilada para:</p>
+					<ul>
+						<li>Proporcionar y mantener nuestro sitio web.</li>
+						<li>Mejorar y personalizar tu experiencia.</li>
+						<li>Responder a tus consultas y solicitudes.</li>
+						<li>Enviar actualizaciones y comunicaciones relevantes.</li>
+						<li>Cumplir con obligaciones legales.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>4. Seguridad de Datos</h2>
+					<p>
+						Implementamos medidas de seguridad técnicas y organizativas para proteger tu información personal contra acceso no autorizado,
+						alteración, divulgación o destrucción.
+					</p>
+				</section>
+
+				<section>
+					<h2>5. Derechos del Usuario</h2>
+					<p>Tienes derecho a:</p>
+					<ul>
+						<li>Acceder a tus datos personales.</li>
+						<li>Solicitar la corrección de datos inexactos.</li>
+						<li>Solicitar la eliminación de tus datos.</li>
+						<li>Oponerme al procesamiento de tus datos.</li>
+						<li>Solicitar la portabilidad de datos.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>6. Política de Cookies</h2>
+					<p>
+						Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas nuestro sitio web.
+						Utilizamos cookies para mejorar tu experiencia de navegación, recordar preferencias y analizar cómo utilizas el sitio.
+					</p>
+
+					<h3>6.1 Tipos de Cookies que Utilizamos</h3>
+					<ul>
+						<li>
+							<strong>Cookies de Sesión:</strong> Se eliminan cuando cierras el navegador.
+							Utilizadas para mantener tu sesión y preferencias durante tu visita.
+						</li>
+						<li>
+							<strong>Cookies Persistentes:</strong> Permanecen en tu dispositivo durante un período específico.
+							Utilizadas para recordar tus preferencias (como el tema oscuro/claro).
+						</li>
+						<li>
+							<strong>Cookies de Análisis:</strong> Nos ayudan a entender cómo los usuarios interactúan con el sitio.
+							Información sobre páginas visitadas y tiempo de permanencia.
+						</li>
+						<li>
+							<strong>Cookies de Funcionalidad:</strong> Mejoran la funcionalidad del sitio web.
+							Recordar idioma preferido y otros ajustes personalizados.
+						</li>
+					</ul>
+
+					<h3>6.2 Cookies de Terceros</h3>
+					<p>
+						Nuestro sitio puede integrar servicios de terceros que también utilizan cookies, como proveedores de análisis
+						y servicios de publicidad. Estas cookies están sujetas a las políticas de privacidad de esos terceros.
+					</p>
+
+					<h3>6.3 Control de Cookies</h3>
+					<p>Puedes controlar y limitar el almacenamiento de cookies en tu dispositivo:</p>
+					<ul>
+						<li>
+							<strong>Ajustes del Navegador:</strong> La mayoría de navegadores te permiten rechazar cookies
+							o alertarte cuando se intenta instalar una cookie.
+						</li>
+						<li>
+							<strong>Bloqueo de Cookies:</strong> Puedes utilizar extensiones del navegador para bloquear cookies.
+						</li>
+						<li>
+							<strong>Limpiar Cookies:</strong> Puedes limpiar las cookies almacenadas en cualquier momento.
+						</li>
+					</ul>
+
+					<h3>6.4 Consentimiento de Cookies</h3>
+					<p>
+						Al continuar navegando en WebAstro, aceptas el uso de cookies tal como se describe en esta política.
+						Si no deseas que se almacenen cookies en tu dispositivo, puedes ajustar la configuración de tu navegador.
+					</p>
+				</section>
+
+				<section>
+					<h2>7. Enlaces Externos</h2>
+					<p>
+						WebAstro puede contener enlaces a sitios web externos. No somos responsables de las prácticas de privacidad de estos sitios.
+						Te recomendamos revisar sus políticas de privacidad.
+					</p>
+				</section>
+
+				<section>
+					<h2>8. Cambios en esta Política</h2>
+					<p>
+						Nos reservamos el derecho de actualizar esta Política de Privacidad en cualquier momento. Los cambios entrarán en vigor
+						cuando se publiquen en el sitio web.
+					</p>
+				</section>
+
+				<section>
+					<h2>9. Contacto</h2>
+					<p>
+						Si tienes preguntas sobre esta Política de Privacidad, puedes contactarnos a:
+						<br />
+						<a href="mailto:contacto@webastro.com">contacto@webastro.com</a>
+						<br />
+						<a href="https://wa.me/5076536054" target="_blank">WhatsApp: +507 6536054</a>
+					</p>
+				</section>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 100%;
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	.legal-container {
+		background: var(--surface);
+		padding: 2rem;
+		border-radius: 8px;
+		line-height: 1.8;
+	}
+
+	h1 {
+		color: var(--black);
+		margin-bottom: 0.5rem;
+		font-size: 2.5em;
+	}
+
+	.last-updated {
+		color: rgb(var(--gray-dark));
+		font-style: italic;
+		margin-bottom: 2rem;
+	}
+
+	h2 {
+		color: var(--black);
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+		border-bottom: 2px solid var(--accent);
+		padding-bottom: 0.5rem;
+	}
+
+	section {
+		margin-bottom: 1.5rem;
+	}
+
+	p {
+		color: rgb(var(--gray-dark));
+		margin-bottom: 1rem;
+	}
+
+	ul {
+		margin-left: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	li {
+		color: rgb(var(--gray-dark));
+		margin-bottom: 0.5rem;
+	}
+
+	a {
+		color: var(--accent);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	:global(html.dark) .legal-container {
+		background: rgba(31, 41, 55, 0.5);
+	}
+
+	:global(html.dark) h1,
+	:global(html.dark) h2 {
+		color: #f3f4f6;
+	}
+
+	:global(html.dark) p,
+	:global(html.dark) li {
+		color: #d1d5db;
+	}
+
+	:global(html.dark) a {
+		color: #60a5fa;
+	}
+</style>

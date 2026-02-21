@@ -1,0 +1,192 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={`Términos de Servicio - ${SITE_TITLE}`} description="Términos de Servicio de WebAstro" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="legal-container">
+				<h1>Términos de Servicio</h1>
+				<p class="last-updated">Última actualización: Febrero 2026</p>
+
+				<section>
+					<h2>1. Aceptación de Términos</h2>
+					<p>
+						Al acceder y utilizar este sitio web (WebAstro), aceptas estar vinculado por estos Términos de Servicio.
+						Si no estás de acuerdo con alguna parte de estos términos, no debes utilizar el sitio.
+					</p>
+				</section>
+
+				<section>
+					<h2>2. Licencia de Uso</h2>
+					<p>
+						Se te otorga una licencia limitada, no exclusiva e intransferible para acceder y utilizar el sitio web únicamente
+						para fines personales y no comerciales. No puedes reproducir, distribuir o transmitir ningún contenido sin permiso previo.
+					</p>
+				</section>
+
+				<section>
+					<h2>3. Contenido del Sitio</h2>
+					<p>
+						Todo el contenido incluido en este sitio web, incluyendo textos, gráficos, logos, imágenes y software,
+						es propiedad de Jorge Enrique Polanco Rodríguez o sus proveedores de contenido y está protegido por leyes de derechos de autor.
+					</p>
+				</section>
+
+				<section>
+					<h2>4. Uso Aceptable</h2>
+					<p>No puedes:</p>
+					<ul>
+						<li>Utilizar el sitio para actividades ilegales o no autorizadas.</li>
+						<li>Acosar, ofender o difamar a otros usuarios.</li>
+						<li>Transmitir malware, virus o código malicioso.</li>
+						<li>Interferir con el funcionamiento del sitio web.</li>
+						<li>Utilizar técnicas de scraping o extracción de datos no autorizadas.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>5. Limitación de Responsabilidad</h2>
+					<p>
+						WebAstro se proporciona "tal como está" sin garantías de ningún tipo. No garantizamos que el sitio será ininterrumpido,
+						seguro o libre de errores. En la medida permitida por la ley, no somos responsables de daños indirectos, incidentales o consecuentes.
+					</p>
+				</section>
+
+				<section>
+					<h2>6. Modificaciones</h2>
+					<p>
+						Nos reservamos el derecho de modificar estos Términos de Servicio en cualquier momento. Los cambios entrarán en vigor
+						cuando se publiquen en el sitio web. Tu uso continuado del sitio constituye aceptación de los términos modificados.
+					</p>
+				</section>
+
+				<section>
+					<h2>7. Enlaces Externos</h2>
+					<p>
+						WebAstro puede contener enlaces a sitios web de terceros. No somos responsables del contenido, precisión o prácticas de estos sitios.
+						La inclusión de un enlace no implica respaldo o asociación.
+					</p>
+				</section>
+
+				<section>
+					<h2>8. Terminación</h2>
+					<p>
+						Nos reservamos el derecho de terminar el acceso de cualquier usuario que viole estos Términos de Servicio sin previo aviso.
+					</p>
+				</section>
+
+				<section>
+					<h2>9. Ley Aplicable</h2>
+					<p>
+						Estos Términos de Servicio se regirán por las leyes de la República de Panamá.
+						Cualquier controversia será resuelta en los juzgados competentes de Panamá.
+					</p>
+				</section>
+
+				<section>
+					<h2>10. Contacto</h2>
+					<p>
+						Si tienes preguntas sobre estos Términos de Servicio, puedes contactarnos a:
+						<br />
+						<a href="mailto:contacto@webastro.com">contacto@webastro.com</a>
+						<br />
+						<a href="https://wa.me/5076536054" target="_blank">WhatsApp: +507 6536054</a>
+					</p>
+				</section>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 100%;
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	.legal-container {
+		background: var(--surface);
+		padding: 2rem;
+		border-radius: 8px;
+		line-height: 1.8;
+	}
+
+	h1 {
+		color: var(--black);
+		margin-bottom: 0.5rem;
+		font-size: 2.5em;
+	}
+
+	.last-updated {
+		color: rgb(var(--gray-dark));
+		font-style: italic;
+		margin-bottom: 2rem;
+	}
+
+	h2 {
+		color: var(--black);
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+		border-bottom: 2px solid var(--accent);
+		padding-bottom: 0.5rem;
+	}
+
+	section {
+		margin-bottom: 1.5rem;
+	}
+
+	p {
+		color: rgb(var(--gray-dark));
+		margin-bottom: 1rem;
+	}
+
+	ul {
+		margin-left: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	li {
+		color: rgb(var(--gray-dark));
+		margin-bottom: 0.5rem;
+	}
+
+	a {
+		color: var(--accent);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	:global(html.dark) .legal-container {
+		background: rgba(31, 41, 55, 0.5);
+	}
+
+	:global(html.dark) h1,
+	:global(html.dark) h2 {
+		color: #f3f4f6;
+	}
+
+	:global(html.dark) p,
+	:global(html.dark) li {
+		color: #d1d5db;
+	}
+
+	:global(html.dark) a {
+		color: #60a5fa;
+	}
+</style>

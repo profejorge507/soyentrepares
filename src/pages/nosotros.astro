@@ -1,0 +1,397 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Sobre Nosotros - ${SITE_TITLE}`}
+			description="Conoce la identidad, misión, visión y valores de Entre Pares Chiriquí, iniciativa institucional de MEDUCA para fortalecer la educación con innovación tecnológica."
+		/>
+		<style>
+			.nosotros-page {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 1rem 4rem;
+			}
+
+			.hero {
+				position: relative;
+				overflow: hidden;
+				border-radius: 1.5rem;
+				padding: clamp(2.5rem, 7vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+				margin-bottom: 3rem;
+				background:
+					linear-gradient(120deg, rgba(15, 23, 42, 0.84), rgba(30, 41, 59, 0.72)),
+					url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=80') center/cover;
+				color: #f8fafc;
+				box-shadow: 0 20px 35px rgba(15, 23, 42, 0.25);
+			}
+
+			.eyebrow {
+				display: inline-block;
+				margin-bottom: 1rem;
+				padding: 0.35rem 0.75rem;
+				border-radius: 999px;
+				font-size: 0.85rem;
+				font-weight: 700;
+				letter-spacing: 0.04em;
+				background: rgba(255, 255, 255, 0.15);
+				border: 1px solid rgba(255, 255, 255, 0.25);
+			}
+
+			.hero h1 {
+				font-size: clamp(2rem, 5vw, 3.4rem);
+				line-height: 1.1;
+				margin-bottom: 1rem;
+				color: #ffffff;
+			}
+
+			.hero p {
+				max-width: 850px;
+				font-size: clamp(1rem, 1.8vw, 1.2rem);
+				line-height: 1.7;
+				margin: 0;
+				color: rgba(241, 245, 249, 0.95);
+			}
+
+			.hero-actions {
+				margin-top: 1.6rem;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.8rem;
+			}
+
+			.hero-btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0.65rem 1.05rem;
+				border: none;
+				border-radius: 0.75rem;
+				font-size: 0.95rem;
+				font-weight: 700;
+				font-family: inherit;
+				cursor: pointer;
+				text-decoration: none;
+				transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+			}
+
+			.hero-btn.primary {
+				background: #ffffff;
+				color: #0f172a;
+			}
+
+			.hero-btn.secondary {
+				border: 1px solid rgba(255, 255, 255, 0.55);
+				color: #ffffff;
+				background: rgba(255, 255, 255, 0.08);
+			}
+
+			.hero-btn:hover {
+				transform: translateY(-2px);
+			}
+
+			.section {
+				padding: 2.8rem 0;
+				border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+			}
+
+			.section:last-of-type {
+				border-bottom: none;
+			}
+
+			.section-title {
+				font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+				margin-bottom: 0.5rem;
+			}
+
+			.section-subtitle {
+				position: relative;
+				max-width: 820px;
+				padding-left: 1rem;
+				color: rgb(var(--gray-dark));
+				margin-bottom: 1.7rem;
+			}
+
+			.section-subtitle::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0.3rem;
+				bottom: 0.3rem;
+				width: 4px;
+				border-radius: 999px;
+				background: linear-gradient(180deg, #2563eb, #38bdf8);
+			}
+
+			.mision-vision-grid {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 1.1rem;
+			}
+
+			.info-card {
+				background: #ffffff;
+				border: 1px solid rgba(148, 163, 184, 0.25);
+				border-radius: 1rem;
+				padding: 1.4rem;
+				box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+			}
+
+			.info-card h3 {
+				font-size: 1.3rem;
+				margin-bottom: 0.6rem;
+				color: #1d4ed8;
+			}
+
+			.info-card p {
+				margin: 0;
+				font-size: 1rem;
+				line-height: 1.75;
+				color: rgb(var(--gray-dark));
+			}
+
+			.values-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+				gap: 1rem;
+			}
+
+			.value-card {
+				background: #ffffff;
+				border-radius: 1rem;
+				padding: 1.3rem;
+				border: 1px solid rgba(148, 163, 184, 0.24);
+				box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
+				transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+			}
+
+			.value-card:hover {
+				transform: translateY(-6px);
+				box-shadow: 0 18px 30px rgba(30, 64, 175, 0.12);
+				border-color: rgba(37, 99, 235, 0.35);
+			}
+
+			.icon-wrap {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 2.8rem;
+				height: 2.8rem;
+				border-radius: 0.8rem;
+				background: linear-gradient(145deg, #dbeafe, #e0f2fe);
+				color: #1d4ed8;
+				margin-bottom: 0.75rem;
+			}
+
+			.value-card h3 {
+				font-size: 1.1rem;
+				margin-bottom: 0.45rem;
+			}
+
+			.value-card p {
+				font-size: 0.96rem;
+				line-height: 1.65;
+				margin: 0;
+			}
+
+			.closing {
+				text-align: center;
+				background: linear-gradient(180deg, #f8fafc, #eef2ff);
+				border: 1px solid rgba(148, 163, 184, 0.25);
+				border-radius: 1rem;
+				padding: 1.7rem;
+			}
+
+			.closing p {
+				margin: 0;
+				line-height: 1.7;
+			}
+
+			.reveal {
+				opacity: 0;
+				transform: translateY(24px);
+				transition: opacity 0.7s ease, transform 0.7s ease;
+			}
+
+			.reveal.is-visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			@media (max-width: 900px) {
+				.nosotros-page {
+					padding: 0 0.85rem 3rem;
+				}
+
+				.mision-vision-grid {
+					grid-template-columns: 1fr;
+				}
+
+				.section {
+					padding: 2.2rem 0;
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.reveal,
+				.reveal.is-visible,
+				.value-card,
+				.hero-btn {
+					transition: none;
+					transform: none;
+					opacity: 1;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="nosotros-page">
+			<section class="hero reveal" aria-labelledby="nosotros-title">
+				<span class="eyebrow">Proyecto institucional MEDUCA · Panamá</span>
+				<h1 id="nosotros-title">Construimos una educación conectada, humana e innovadora</h1>
+				<p>
+					Entre Pares Chiriquí es una iniciativa del Ministerio de Educación de la República de Panamá (MEDUCA)
+					que impulsa la transformación educativa mediante la integración estratégica de tecnología, metodologías
+					activas y colaboración docente. Formamos educadores capaces de liderar cambios reales en el aula,
+					fortaleciendo la calidad, la equidad y la pertinencia del aprendizaje en todo el territorio nacional.
+				</p>
+				<div class="hero-actions">
+					<button type="button" class="hero-btn primary" data-href="/blog">Explorar recursos educativos</button>
+					<button type="button" class="hero-btn secondary" data-href="/galeria">Ver experiencias de formación</button>
+				</div>
+			</section>
+
+			<section class="section reveal" aria-labelledby="identidad-title">
+				<h2 id="identidad-title" class="section-title">Nuestra identidad institucional</h2>
+				<p class="section-subtitle">
+					Alineados a las prioridades de MEDUCA, promovemos una cultura de mejora continua para que cada docente
+					cuente con herramientas prácticas, digitales y pedagógicas que fortalezcan el aprendizaje significativo de
+					niñas, niños y jóvenes en Panamá.
+				</p>
+				<div class="mision-vision-grid">
+					<article class="info-card">
+						<h3>Misión</h3>
+						<p>
+							Fortalecer las competencias de los docentes panameños en el uso pedagógico de la tecnología, mediante
+							procesos formativos pertinentes, accesibles y orientados a resultados, que mejoren la enseñanza y
+							respondan a los desafíos de una sociedad digital en constante evolución.
+						</p>
+					</article>
+					<article class="info-card">
+						<h3>Visión</h3>
+						<p>
+							Consolidarnos como referente nacional en innovación educativa y formación docente, contribuyendo a un
+							sistema educativo inclusivo, colaborativo y de alta calidad, donde la tecnología sea una aliada para la
+							equidad, el desarrollo integral y el éxito estudiantil.
+						</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="section reveal" aria-labelledby="valores-title">
+				<h2 id="valores-title" class="section-title">Valores que guían nuestro trabajo</h2>
+				<p class="section-subtitle">
+					Cada acción de Entre Pares Chiriquí se sustenta en principios que fortalecen nuestra labor formativa y
+					garantizan un impacto educativo sostenible.
+				</p>
+
+				<div class="values-grid">
+					<article class="value-card">
+						<span class="icon-wrap" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09A6 6 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg>
+						</span>
+						<h3>Compromiso</h3>
+						<p>Trabajamos con vocación de servicio para que cada formación genere cambios concretos en la práctica docente.</p>
+					</article>
+
+					<article class="value-card">
+						<span class="icon-wrap" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5zm-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"/></svg>
+						</span>
+						<h3>Integridad</h3>
+						<p>Actuamos con ética, transparencia y responsabilidad, respetando los lineamientos institucionales de MEDUCA.</p>
+					</article>
+
+					<article class="value-card">
+						<span class="icon-wrap" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M9 21h6v-1H9zm3-20a7 7 0 0 0-4 12.75V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3.25A7 7 0 0 0 12 1"/></svg>
+						</span>
+						<h3>Innovación</h3>
+						<p>Promovemos soluciones creativas y metodologías activas para transformar la enseñanza con sentido pedagógico.</p>
+					</article>
+
+					<article class="value-card">
+						<span class="icon-wrap" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3m-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3m0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13m8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5"/></svg>
+						</span>
+						<h3>Colaboración</h3>
+						<p>Fomentamos el aprendizaje entre pares para compartir buenas prácticas y fortalecer redes profesionales docentes.</p>
+					</article>
+
+					<article class="value-card">
+						<span class="icon-wrap" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2m6.93 9h-3.02a15 15 0 0 0-1.2-5.03A8.01 8.01 0 0 1 18.93 11M12 4c1.11 1.56 1.88 3.74 2.07 7H9.93C10.12 7.74 10.89 5.56 12 4M4.99 13h3.02c.2 1.82.78 3.54 1.69 5.03A8.01 8.01 0 0 1 4.99 13M8.01 11H4.99a8.01 8.01 0 0 1 4.71-5.03A15 15 0 0 0 8.01 11m.02 2h3.94c-.2 3.26-.97 5.44-2.07 7-1.11-1.56-1.88-3.74-2.07-7M14.3 18.03A15 15 0 0 0 15.99 13h3.02a8.01 8.01 0 0 1-4.71 5.03"/></svg>
+						</span>
+						<h3>Equidad educativa</h3>
+						<p>Impulsamos oportunidades de formación pertinentes para todas las regiones, procurando que ningún docente quede atrás.</p>
+					</article>
+
+					<article class="value-card">
+						<span class="icon-wrap" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+						</span>
+						<h3>Excelencia</h3>
+						<p>Mantenemos estándares de calidad en cada proceso para elevar los aprendizajes y el impacto en la comunidad educativa.</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="section reveal" aria-label="Mensaje de cierre institucional">
+				<div class="closing">
+					<p>
+						En Entre Pares Chiriquí creemos que transformar la educación es una tarea colectiva. Invitamos a docentes,
+						coordinadores y comunidades educativas a seguir construyendo, junto a MEDUCA, un país con más oportunidades,
+						más innovación y mejores resultados para nuestros estudiantes.
+					</p>
+				</div>
+			</section>
+		</main>
+
+		<script>
+			document.querySelectorAll<HTMLButtonElement>('.hero-btn[data-href]').forEach((button) => {
+				button.addEventListener('click', () => {
+					const href = button.dataset.href;
+					if (href) window.location.href = href;
+				});
+			});
+
+			const revealElements = Array.from(document.querySelectorAll('.reveal'));
+
+			if ('IntersectionObserver' in window) {
+				const observer = new IntersectionObserver(
+					(entries, currentObserver) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								currentObserver.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.12 }
+				);
+
+				revealElements.forEach((element) => observer.observe(element));
+			} else {
+				revealElements.forEach((element) => element.classList.add('is-visible'));
+			}
+		</script>
+		<Footer />
+	</body>
+</html>

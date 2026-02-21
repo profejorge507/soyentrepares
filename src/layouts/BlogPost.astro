@@ -1,0 +1,159 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ViewTransitions } from 'astro:transitions';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+// no se necesitan imágenes de relleno; se usa la URL proporcionada directamente
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, tags = [] } = Astro.props as Props;
+
+// Obtener el slug de la URL para asegurar que coincida con el ID usado en la lista
+const slug = Astro.url.pathname.replace(/\/$/, '').split('/').pop();
+
+// calcular heroImageSrc de manera simple: si es cadena la usamos, si es objeto con src extraemos
+const heroImageSrc =
+	typeof heroImage === 'string'
+		? heroImage
+		: heroImage && typeof heroImage === 'object' && 'src' in heroImage
+			? (heroImage as any).src
+			: undefined;
+---
+
+<html lang="es">
+	<head>
+		<BaseHead title={title} description={description} />
+		<ViewTransitions />
+		<style>
+			main {
+				/* Hereda estilos de global.css */
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
+			.prose {
+				width: 720px;
+				max-width: 100%;
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+			.tags {
+				display: flex;
+				gap: 0.5rem;
+				margin-top: 1rem;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			.tag {
+				background-color: rgb(var(--gray-light));
+				color: rgb(var(--gray-dark));
+				padding: 0.2rem 0.8rem;
+				border-radius: 20px;
+				text-decoration: none;
+				font-size: 0.9em;
+				transition: transform 0.25s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+				animation: tag-float 3.2s ease-in-out infinite;
+				animation-delay: calc(var(--tag-index, 0) * 120ms);
+				will-change: transform;
+			}
+			.tag:hover {
+				background-color: var(--accent);
+				color: white;
+				transform: translateY(-3px) scale(1.03);
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.14);
+				animation-play-state: paused;
+			}
+			:global(html.dark) .tag {
+				background-color: #374151;
+				color: #e5e7eb;
+			}
+			:global(html.dark) .tag:hover {
+				box-shadow: 0 10px 18px rgba(255, 255, 255, 0.12);
+			}
+			@keyframes tag-float {
+				0%,
+				100% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-4px);
+				}
+			}
+			@media (prefers-reduced-motion: reduce) {
+				.tag {
+					animation: none;
+					transition: background-color 0.2s ease, color 0.2s ease;
+				}
+				.tag:hover {
+					transform: none;
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					{heroImageSrc && (
+						<img width={1020} height={510} src={heroImageSrc} alt={title} />
+					)}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+						<hr />
+						{tags && tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag: string, index: number) => (
+									<a href={`/${encodeURIComponent(tag)}`} class="tag" style={`--tag-index:${index};`}>#{tag}</a>
+								))}
+							</div>
+						)}
+					</div>
+					<slot />
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

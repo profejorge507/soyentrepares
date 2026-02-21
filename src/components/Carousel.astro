@@ -1,0 +1,265 @@
+---
+const slides = [
+  {
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+    title: "Desarrollo Web Full Stack",
+    description: "Creando soluciones digitales robustas y escalables."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=80",
+    title: "Diseño UI/UX Intuitivo",
+    description: "Interfaces que enamoran y retienen a los usuarios."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+    title: "Análisis de Datos Estratégico",
+    description: "Transformando datos complejos en decisiones claras."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    title: "Innovación Tecnológica",
+    description: "Siempre a la vanguardia de las nuevas tendencias."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
+    title: "Liderazgo de Equipos",
+    description: "Fomentando la colaboración y el crecimiento colectivo."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
+    title: "Educación y Mentoria",
+    description: "Compartiendo conocimiento para el futuro."
+  }
+];
+---
+
+<div class="carousel" aria-label="Galería destacada">
+  <div class="carousel-track-container">
+    <ul class="carousel-track">
+      {slides.map((slide, index) => (
+        <li class={`carousel-slide ${index === 0 ? 'current-slide' : ''}`}>
+          <img src={slide.image} alt={slide.title} class="carousel-image" loading={index === 0 ? "eager" : "lazy"} />
+          <div class="carousel-caption">
+            <h3>{slide.title}</h3>
+            <p>{slide.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <button class="carousel-button carousel-button--left" aria-label="Imagen anterior">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="carousel-button carousel-button--right" aria-label="Siguiente imagen">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+
+  <div class="carousel-nav">
+    {slides.map((_, index) => (
+      <button class={`carousel-indicator ${index === 0 ? 'current-slide' : ''}`} aria-label={`Ir a imagen ${index + 1}`}></button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .carousel {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    margin: 0 auto 3rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  .carousel-track-container {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-slide.current-slide {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 3rem 1.5rem 1.5rem;
+    color: white;
+    text-align: center;
+  }
+
+  .carousel-caption h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: white;
+  }
+
+  .carousel-caption p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    backdrop-filter: blur(4px);
+    transition: background 0.3s;
+    z-index: 2;
+  }
+
+  .carousel-button:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .carousel-button--left { left: 10px; }
+  .carousel-button--right { right: 10px; }
+
+  .carousel-nav {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+  }
+
+  .carousel-indicator {
+    border: 0;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .carousel-indicator.current-slide {
+    background: white;
+    transform: scale(1.2);
+  }
+</style>
+
+<script>
+  const carousels = document.querySelectorAll('.carousel');
+
+  carousels.forEach(carousel => {
+    const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+    const nextButton = carousel.querySelector('.carousel-button--right');
+    const prevButton = carousel.querySelector('.carousel-button--left');
+    const dotsNav = carousel.querySelector('.carousel-nav');
+    const dots = Array.from(dotsNav?.children || []);
+
+    let currentIndex = 0;
+    let interval: number;
+
+    const updateSlide = (index: number) => {
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.add('current-slide');
+        } else {
+          slide.classList.remove('current-slide');
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add('current-slide');
+        } else {
+          dot.classList.remove('current-slide');
+        }
+      });
+    };
+
+    const nextSlide = () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateSlide(currentIndex);
+    };
+
+    const prevSlide = () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateSlide(currentIndex);
+    };
+
+    const startAutoPlay = () => {
+      interval = setInterval(nextSlide, 5000) as unknown as number;
+    };
+
+    const stopAutoPlay = () => {
+      clearInterval(interval);
+    };
+
+    nextButton?.addEventListener('click', () => {
+      stopAutoPlay();
+      nextSlide();
+      startAutoPlay();
+    });
+
+    prevButton?.addEventListener('click', () => {
+      stopAutoPlay();
+      prevSlide();
+      startAutoPlay();
+    });
+
+    dotsNav?.addEventListener('click', (e) => {
+      const targetDot = (e.target as Element).closest('button');
+      if (!targetDot) return;
+
+      stopAutoPlay();
+      const targetIndex = dots.findIndex(dot => dot === targetDot);
+      currentIndex = targetIndex;
+      updateSlide(currentIndex);
+      startAutoPlay();
+    });
+
+    startAutoPlay();
+  });
+</script>

@@ -1,0 +1,84 @@
+---
+---
+<button id="themeToggle" class="theme-toggle" aria-label="Alternar tema" aria-pressed="false">
+	<!-- Icono Sol (Visible en Dark Mode) -->
+	<svg id="sun-icon" class="icon sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+	<!-- Icono Luna (Visible en Light Mode) -->
+	<svg id="moon-icon" class="icon moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+
+<script>
+	const btn = document.getElementById('themeToggle');
+	const root = document.documentElement;
+	
+	if (btn) {
+		const safeGet = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+		const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+		let theme = safeGet('theme') || (prefersDark ? 'dark' : 'light');
+		
+		function applyTheme(t) {
+			if (t === 'dark') {
+				root.classList.add('dark');
+				btn.setAttribute('aria-label', 'Cambiar a modo claro');
+			} else {
+				root.classList.remove('dark');
+				btn.setAttribute('aria-label', 'Cambiar a modo oscuro');
+			}
+			btn.setAttribute('aria-pressed', t === 'dark');
+		}
+		
+		applyTheme(theme);
+		
+		btn.addEventListener('click', () => {
+			theme = root.classList.contains('dark') ? 'light' : 'dark';
+			try { localStorage.setItem('theme', theme); } catch(e) {}
+			applyTheme(theme);
+		});
+	}
+</script>
+
+<style>
+	.theme-toggle {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.5rem;
+		color: inherit;		
+		border-radius: 50%;
+		transition: background-color 0.3s ease;
+		position: relative;
+		width: 40px;
+		height: 40px;
+	}
+
+	.theme-toggle:hover {
+		background-color: rgba(0, 0, 0, 0.05);
+	}
+
+	:global(html.dark) .theme-toggle:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.icon {
+		width: 1.25rem;
+		height: 1.25rem;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease-in-out;
+	}
+
+	/* Lógica de visualización de iconos */
+	.moon {
+		opacity: 1;
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	.sun {
+		opacity: 0;
+		transform: translate(-50%, -50%) rotate(90deg);
+	}
+
+	/* En modo oscuro, el sol es visible y la luna se oculta rotando */
+	:global(html.dark) .sun { opacity: 1; transform: translate(-50%, -50%) rotate(0deg); }
+	:global(html.dark) .moon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg); }
+</style>
